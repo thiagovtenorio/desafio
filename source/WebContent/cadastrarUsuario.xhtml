@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html"></f:view>
+
+<h:head>
+
+</h:head>
+
+
+<h:body>
+	<p:menubar>
+		<p:menuitem value="Cadastrar" url="cadastrarUsuario.xhtml"/>
+		<p:menuitem value="Consultar" url="consultarUsuario.xhtml"/>
+	</p:menubar>
+	<h:form>
+	<!-- Form de Cadastro -->
+		<p:panel id="panelgrid" header="Cadastrar Usuário"  >
+			<p:outputLabel value="Nome:" for="acNome" />
+			<p:autoComplete id="acNome" value="#{pessoaMB.pessoa.nome}" disabled="#{pessoaMB.detalhar}"/>
+			<p:outputLabel value="Senha:" for="acSenha" />
+			<p:autoComplete id="acSenha" value="#{pessoaMB.pessoa.senha}" disabled="#{pessoaMB.detalhar}"/>
+			<p:outputLabel value="E-Mail:" for="acEmail" />
+			<p:autoComplete id="acEmail" value="#{pessoaMB.pessoa.email}" disabled="#{pessoaMB.detalhar}"/>
+			
+ 			<p:growl id="messages" /> 
+			
+		</p:panel>
+		<p:panel id="panelTelefone" header="Adicionar Telefones" >
+			<p:outputLabel value="ddd" for="acDdd" />
+			<p:autoComplete id="acDdd" value="#{pessoaMB.telefone.ddd}" disabled="#{pessoaMB.detalhar}"/>
+			<p:outputLabel value="Número" for="acNumero" />
+			<p:autoComplete id="acNumero" value="#{pessoaMB.telefone.numero}" disabled="#{pessoaMB.detalhar}"/>
+			<p:outputLabel value="Tipo" for="tipo" />
+			<p:selectOneMenu id="tipo" value="#{pessoaMB.telefone.tipo}" style="width:125px" disabled="#{pessoaMB.detalhar}">
+				<f:selectItem itemLabel="Celular" itemValue="Celular" />
+            	<f:selectItem itemLabel="Fixo" itemValue="Fixo" />
+			</p:selectOneMenu>
+            
+			<p:splitButton value="adicionar" action="#{pessoaMB.adicionarTelefone}" disabled="#{pessoaMB.detalhar}"
+				type="button" update="panelTelefone" >
+			</p:splitButton>
+			<p:dataTable var="telefone" value="#{pessoaMB.telefones}">
+			    <p:column headerText="ddd">
+			        <h:outputText value="#{telefone.ddd}" />
+			    </p:column>
+			 
+			    <p:column headerText="número">
+			        <h:outputText value="#{telefone.numero}" />
+			    </p:column>
+			 
+			    <p:column headerText="tipo">
+			        <h:outputText value="#{telefone.tipo}" />
+			    </p:column>
+			</p:dataTable>
+		</p:panel>
+		<p:splitButton value="salvar" action="#{pessoaMB.salvar}"
+				type="button" update="panelgrid" icon="ui-icon-disk">
+		</p:splitButton>
+		<p:splitButton value="voltar" action="#{pessoaMB.voltar}" rendered="#{pessoaMB.editar or pessoaMB.detalhar}"
+				type="button" update="panelgrid">
+		</p:splitButton>
+	</h:form>
+</h:body>
+
+</html>

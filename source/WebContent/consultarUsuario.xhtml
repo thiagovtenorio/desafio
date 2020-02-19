@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html"></f:view>
+
+<h:head>
+</h:head>
+<h:body>
+	<p:outputLabel value="Desafio Sefaz"></p:outputLabel>
+	<p:menubar>
+		<p:menuitem value="Cadastrar" url="cadastrarUsuario.xhtml"/>
+		<p:menuitem value="Consultar" url="consultarUsuario.xhtml"/>
+	</p:menubar>
+	<h:form id="formUsuario">
+		<p:panel id="panelConsulta" header="Consultar Usuário" >
+			<p:outputLabel value="Nome:" for="acNome" />
+			<p:autoComplete id="acNome" value="#{pessoaMB.pessoaConsulta.nome}" />
+			<p:commandButton value="Pesquisar" action="#{pessoaMB.pesquisar}" update="panelgrid"/>
+		</p:panel>
+		<p:panel id="panelgrid"  >
+			<!-- Grid de Consulta -->
+			<p:dataTable id="dtPessoas" var="c" value="#{pessoaMB.list}">
+				<p:column headerText="Nome">
+					<h:outputText value="#{c.nome}" />
+				</p:column>
+				<p:column headerText="Senha">
+					<h:outputText value="#{c.senha}" />
+				</p:column>
+				<p:column headerText="Email">
+					<h:outputText value="#{c.email}" />
+				</p:column>
+				 <p:column style="width:120px;text-align: center">
+				 	<p:commandButton  value="Excluir" styleClass="ui-priority-primary" title="Excluir" 
+				 		action="#{pessoaMB.remover}" update="dtPessoas">
+                		<f:setPropertyActionListener value="#{c}" target="#{pessoaMB.selectedPessoa}" />
+            		</p:commandButton>
+				 </p:column>
+				 <p:column style="width:120px;text-align: center">
+				 	<p:commandButton  value="Editar" action="#{pessoaMB.editar}" styleClass="ui-priority-primary" title="Editar">
+				 		 <f:setPropertyActionListener value="#{c}" target="#{pessoaMB.pessoa}" />
+				 		 <f:setPropertyActionListener value="editar" target="#{pessoaMB.operacao}" />
+            		</p:commandButton>
+				 </p:column>
+				 <p:column style="width:120px;text-align: center">
+				 	<p:commandButton  value="Detalhar" action="#{pessoaMB.detalhar}" styleClass="ui-priority-primary" title="Detalhar">
+				 		<f:setPropertyActionListener value="#{c}" target="#{pessoaMB.pessoa}" />
+				 		<f:setPropertyActionListener value="detalhar" target="#{pessoaMB.operacao}" />
+				 	</p:commandButton>
+				 </p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
